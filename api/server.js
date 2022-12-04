@@ -1,12 +1,15 @@
 import express from 'express';
 import colors from 'colors';
 import dotenv from 'dotenv';
-import StudentRoute from './routes/Student.js'
-import userRoute from './routes/user.js'
-import mongoDBConerct from './config/db.js';
+import path from 'path'
 import ErrorHandaler from './middwalers/ErrorHandaler.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+import { mongoDBConnect } from './config/db.js';
+import userRoute from './routes/user.js'
+
+
+
 
 //init express
 const app = express()
@@ -24,9 +27,17 @@ app.use(cors());
 const PORT = process.env.SERVER_PORT || 5000;
 
 
+
 //routes
-app.use('/api/student', StudentRoute)
-app.use('/api/user', userRoute)
+app.use('/api/v1/user', userRoute)
+
+
+
+//static folder
+app.use(express.static('api/publice'))
+
+
+
 
 //express error handler
 app.use(ErrorHandaler)
@@ -34,6 +45,6 @@ app.use(ErrorHandaler)
 
 //lisent server
 app.listen(PORT, () => {
-    mongoDBConerct();
+    mongoDBConnect()
     console.log(`server is running on port ${PORT}`.bgGreen.black);
 });

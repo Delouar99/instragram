@@ -1,8 +1,5 @@
 import express from 'express';
-import { CreateUser, DeleteUser, getAllUser, getLoggedInUser, getSingleUser, recoverpassword, UpdateUser, useRegister, userLogin, verifyUserAccount } from '../controllers/userControler.js';
-import { adminMiddlware } from '../middwalers/adminMiddlware.js';
-import { authMIddleware } from '../middwalers/authMiddleware.js';
-import { userMiddware } from '../middwalers/userMiddware.js';
+import { loggedinUser, login, register, acctivateAccount, acctivateAccountBycode, forgotPassword, forgotPasswordAction, ForgotacctivateAccountBycode, resendActivation } from '../controllers/userControler.js';
 
 
 
@@ -12,20 +9,15 @@ const router = express.Router();
 
 
 //user auth route
-router.post('/login', userLogin);
-router.post('/register', useRegister);
-router.get('/me', getLoggedInUser);
-router.post('/verify', verifyUserAccount);
-router.post('/recoverpassword', recoverpassword);
-
-
-
-
-//route user api
-router.route('/').get(adminMiddlware, getAllUser).post(authMIddleware, CreateUser)
-router.route('/:id').get(userMiddware, getSingleUser).put(userMiddware, UpdateUser).patch( userMiddware, UpdateUser).delete(userMiddware, DeleteUser)
-
-
+router.post('/register', register)
+router.post('/login', login)
+router.get('/me', loggedinUser)
+router.get('/activate/:token', acctivateAccount)
+router.post('/code-activation', acctivateAccountBycode)
+router.post('/resend-Link', resendActivation)
+router.post('/forgot-password', forgotPassword)
+router.post('/forgot-password/:token', forgotPasswordAction)
+router.post('/Forgotcode-activation', ForgotacctivateAccountBycode)
 
 
 

@@ -1,18 +1,16 @@
 
 import mongoose from "mongoose";
 
-//create a mongodb connection
-const mongoDBConerct = async () =>{
+export const mongoDBConnect = async () => {
+
 try {
-    
-    await mongoose.connect(process.env.MONGO_STRING);
-    console.log(`mongo DB connected sucesfully`.bgYellow.black);
 
+    const connect = await mongoose.connect('mongodb://127.0.0.1/delouar')
+    console.log(`mongodb server is connected`.bgYellow);
+    
 } catch (error) {
-console.log(error);
-    
-}
-    
+    console.log(error.message);
 }
 
-export default mongoDBConerct;
+}
+
